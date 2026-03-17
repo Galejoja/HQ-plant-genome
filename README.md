@@ -1,2 +1,2 @@
 # HQ-plant-genome
-R script to visualize standardized quality metrics for plant genome assemblies
+This repository provides a reproducible R workflow to compute and visualize standardized quality metrics for plant genome assemblies as a radar plot.
