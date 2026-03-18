@@ -1,0 +1,7 @@
+Metric	Value
+CC	33.4
+BUSCO_assembly	99
+BUSCO_annotation	98.8
+PSAURON	95.8
+QV	43.39
+Species	Arabidopsis thaliana
