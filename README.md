@@ -165,7 +165,7 @@ The script generates:
 
 Example of **Arabidopsis thaliana* TAIR10:
 <p align="center">
-<img src="" title="TAIR10_example" />
+<img src="https://github.com/Galejoja/HQ-plant-genome/blob/main/docs/TAIR10.pdf" title="TAIR10_example" />
 </p>
 
 ## Citing this tool
