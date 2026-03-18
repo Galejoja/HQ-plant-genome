@@ -61,10 +61,10 @@ The file should include the following entries:
 - BUSCO_annotation
 - PSAURON
 - QV
-- Species
+- Sample
 
-Numeric values are expected for all metrics except `Species`, which should be provided as text.
-
+Numeric values are expected for all metrics except `Sample`, which should be provided as text.
+Sample name will be used for the plot legend, and corresponds to species scientific name, assembly name, etc.
 ```
 
 ### Example:
@@ -76,57 +76,79 @@ Numeric values are expected for all metrics except `Species`, which should be pr
 | BUSCO_annotation | 98.8 |
 | PSAURON | 95.8 |
 | QV | 43.39 |
-| Species | Arabidopsis thaliana |
+| Sample | Arabidopsis thaliana |
 
-### Assembly and annotation evaluation
-#### **Contig / Chromosome ratio (CC)**
 
-This metric consider contigs instead of scaffolds; it is necessary to identify Ns joined sequences 
+## Assembly and annotation evaluation
+
+These commands provide example workflows; parameters may require adjustment depending on data type, software version or configuration, and computational resources.
+For software supporting information please see [seqtk](https://github.com/lh3/seqtk), [BUSCO](https://busco.ezlab.org/), [PSAURON](https://github.com/salzberg-lab/PSAURON), and [Merqury](https://github.com/marbl/merqury).
+
+
+### **Contig / Chromosome ratio (CC)**
+
+This metric considers contigs rather than scaffolds. If scaffolds contain stretches of Ns, they should be split to estimate the true number of contigs.
+
 ```bash
-#calculate the number of contigs using seqtk
+#Count contigs by splitting sequences at Ns using seqtk
 seqtk cutN -n 1 assembly.fasta | grep -c '>'
 ```
 Use the following formula to calculate **CC**
 
       CC = Number of contigs / Number of chromosome pairs
 
-#### **BUSCO (assembly)**
-Since higher-level datasets (e.g. eukaryote) can misestimate completeness, please use the most appropriate lineage dataset.
+### **BUSCO (assembly)**
+To assess assembly completeness, use BUSCO with the most appropriate lineage dataset. Higher-level datasets (e.g., eukaryota) may misestimate completeness.
 ```bash
 busco -i assembly.fasta -m genome -l lineage_path -o output_name
 ```
+Please use the ‘Complete BUSCO (%)’ value.
 
-#### **BUSCO (annotation)**
-The proteins or transcripts FASTA file can be used for annotation evaluation.
+### **BUSCO (annotation)**
+Annotation completeness can be evaluated using the prediceted proteins or transcripts.
 ```bash
-busco -i proteins.fasta -m prot -l lineage_dataset_path -o output_name
+busco -i proteins.fasta -m prot -l lineage_path -o output_name
 ```
 or
 ```bash
-busco -i transcripts.fasta -m tran -l lineage_dataset_path -o output_name
+busco -i transcripts.fasta -m tran -l lineage_path -o output_name
 ```
+Please use the ‘Complete BUSCO (%)’ value.
 
-#### **QV**
-Count the ocurrence of canonical kmers in a high accuracy dataset (e.g., Illumina data) using Meryl
+### **PSAURON score**
+Annotation quality can be evaluated using PSAURON based on protein sequences.
+```bash
+psauron -i proteins.fasta -o output_name
+```
+The overall PSAURON score is reported in the output file (top).
+
+
+### **QV**
+Quality value is estimated using k-mer-based methods with high-accuracy sequencing data (e.g., Illumina reads).
+
+First, count the ocurrence of canonical kmers using Meryl
 ```bash
 meryl k=31 count threads=<int> memory=<int>g data_path output my_data.meryl
 ```
-k-mer based assembly evaluation using Merqury
+Then, evaluate the assembly using Merqury
 ```bash
 merqury.sh my_data.meryl assembly.fasta output_name
 ```
+The QV value can be obtained from the fourth column of the `.qv` file. 
 
-## Usage
+
+# Usage
 
 Run the script from the command line:
 
 ```bash
-Rscript HQ_plant_genome.Rscript genome_metrics.txt
+Rscript HQ_plant_genome.Rscript input_file output_name
 ```
+See `genome_metrics.txt` for an example of input file.
 
 ## Output
 
-Tell the user exactly what they’ll get:
+The R script will generate a radar plot as PDF file.
 
 ```markdown
 ## Output
@@ -139,4 +161,4 @@ The script generates:
 ## Citing this tool
 If you use HQ-plant-genome for the visualization of genome quality metrics, please cite:
 
-  - Alejo-Jacuinde, G, Albert, VA, Herrera-Estrella, L. **2026** Beyond Assembly: Standardizing Plant Genome Quality in the Age of Long Reads
+  - Alejo-Jacuinde, G, Albert, VA, Herrera-Estrella, L. **2026** Beyond Assembly: Standardizing Plant Genome Quality in the Age of Long Reads. (Submitted)
