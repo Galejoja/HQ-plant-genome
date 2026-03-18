@@ -37,17 +37,16 @@ The following metrics are proposed for the evaluation of genome assemblies and a
  
 ## Installation
 
+Clone from this repository:
+```bash
+git clone https://github.com/Galejoja/HQ-plant-genome.git
+```
+
+
 Install required R packages (if not already installed):
 
 ```r
 install.packages(c("dplyr", "fmsb", "png", "grid"))
-```
-
----
-
-Clone from this repository:
-```bash
-git clone https://github.com/Galejoja/HQ-plant-genome.git
 ```
 
 ## Input file format
