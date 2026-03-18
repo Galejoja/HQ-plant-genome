@@ -144,7 +144,7 @@ Run the script from the command line:
 ```bash
 Rscript HQ_plant_genome.Rscript input_file output_name
 ```
-See `genome_metrics.txt` for an example of input file.
+See [genome_metrics.txt](https://github.com/Galejoja/HQ-plant-genome/blob/main/docs/genome_metrics.txt) for an example of input file.
 
 ## Output
 
