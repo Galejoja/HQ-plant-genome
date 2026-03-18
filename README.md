@@ -163,6 +163,11 @@ The script generates:
 - A radar plot summarizing genome quality metrics
 ```
 
+Example of **Arabidopsis thaliana* TAIR10:
+<p align="center">
+<img src="" title="TAIR10_example" />
+</p>
+
 ## Citing this tool
 If you use HQ-plant-genome for the visualization of genome quality metrics, please cite:
 
