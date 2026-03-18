@@ -84,7 +84,7 @@ Numeric values are expected for all metrics except `Species`, which should be pr
 This metric consider contigs instead of scaffolds; it is necessary to identify Ns joined sequences 
 ```bash
 #calculate the number of contigs using seqtk
-seqtk cutN -n 1 <assembly.fasta> | grep -c '>'
+seqtk cutN -n 1 assembly.fasta | grep -c '>'
 ```
 Use the following formula to calculate **CC**
 
@@ -93,27 +93,27 @@ Use the following formula to calculate **CC**
 #### **BUSCO (assembly)**
 Since higher-level datasets (e.g. eukaryote) can misestimate completeness, please use the most appropriate lineage dataset.
 ```bash
-busco -i <assembly.fasta> -m genome -l <lineage_path> -o <output_name>
+busco -i assembly.fasta -m genome -l lineage_path -o output_name
 ```
 
 #### **BUSCO (annotation)**
 The proteins or transcripts FASTA file can be used for annotation evaluation.
 ```bash
-busco -i <proteins.fasta> -m prot -l <lineage_dataset_path> -o <output_name>
+busco -i proteins.fasta -m prot -l lineage_dataset_path -o output_name
 ```
 or
 ```bash
-busco -i <transcripts.fasta> -m tran -l <lineage_dataset_path> -o <output_name>
+busco -i transcripts.fasta -m tran -l lineage_dataset_path -o output_name
 ```
 
 #### **QV**
 Count the ocurrence of canonical kmers in a high accuracy dataset (e.g., Illumina data) using Meryl
 ```bash
-meryl k=31 count threads=<int> memory=<int>g <data_path> output my_data.meryl
+meryl k=31 count threads=<int> memory=<int>g data_path output my_data.meryl
 ```
 k-mer based assembly evaluation using Merqury
 ```bash
-merqury.sh my_data.meryl <assembly.fasta> <output_name>
+merqury.sh my_data.meryl assembly.fasta output_name
 ```
 
 ## Usage
