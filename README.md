@@ -45,6 +45,11 @@ install.packages(c("dplyr", "fmsb", "png", "grid"))
 
 ---
 
+Clone from this repository:
+```bash
+git clone https://github.com/Galejoja/HQ-plant-genome.git
+```
+
 ## Input file format
 
 User must provide a two column table including quality metrics.
