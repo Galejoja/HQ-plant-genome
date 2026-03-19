@@ -37,16 +37,22 @@ The following metrics are proposed for the evaluation of genome assemblies and a
  
 ## Installation
 
-Clone from this repository:
+### Clone from this repository:
 ```bash
 git clone https://github.com/Galejoja/HQ-plant-genome.git
 ```
 
 
-Install required R packages (if not already installed):
+This script depends on a set of R packages. You can install them using either of the following methods:
 
+**Option 1: From within R**
 ```r
 install.packages(c("dplyr", "fmsb", "png", "grid"))
+```
+
+**Option 2: From the command line**
+```bash
+Rscript -e "install.packages(c('dplyr', 'fmsb', 'png', 'grid'), repos='https://cloud.r-project.org')"
 ```
 
 ## Input file format
@@ -91,7 +97,7 @@ For software supporting information please see [seqtk](https://github.com/lh3/se
 
 ### **Contig / Chromosome ratio (CC)**
 
-This metric considers contigs rather than scaffolds. If scaffolds contain stretches of Ns, they should be split to estimate the true number of contigs.
+A detailed description of the contig/chromosome ratio (CC) is provided in [Wang and Wang (2023)](https://doi.org/10.1016/j.tig.2022.10.005). This metric considers contigs rather than scaffolds. If scaffolds contain stretches of Ns, they should be split to estimate the true number of contigs.
 
 ```bash
 #Count contigs by splitting sequences at Ns using seqtk
