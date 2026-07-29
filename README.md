@@ -113,12 +113,14 @@ Use the following formula to calculate **CC**
 
       CC = Number of contigs / Number of chromosome pairs
 
+
 ### **BUSCO (assembly)**
 To assess assembly completeness, use BUSCO with the most appropriate lineage dataset. Higher-level datasets (e.g., eukaryota) may misestimate completeness.
 ```bash
 busco -i assembly.fasta -m genome -l lineage_path -o output_name
 ```
 Please use the ‘Complete BUSCO (%)’ value.
+
 
 ### **BUSCO (annotation)**
 Annotation completeness can be evaluated using the prediceted proteins or transcripts.
@@ -131,6 +133,7 @@ busco -i transcripts.fasta -m tran -l lineage_path -o output_name
 ```
 Please use the ‘Complete BUSCO (%)’ value.
 
+
 ### **PSAURON score**
 Annotation quality can be evaluated using PSAURON based on protein sequences.
 ```bash
@@ -138,25 +141,28 @@ psauron -i proteins.fasta -o output_name
 ```
 The overall PSAURON score is reported in the output file (top).
 
+
 ### **LAI**
 Completeness of repetitive regions can be evaluated using LTR_retriever from LTR candidates.
 
-First, generating input files with LTRharvest and LTR_FINDER_parallel
+First, generate candidate LTRs using LTRharvest and LTR_FINDER_parallel
 ```bash
 #LTRharvest
 gt suffixerator -db assembly.fasta -indexname genome.fasta -tis -suf -lcp -des -ssp -sds -dna
 gt ltrharvest -index genome.fasta -minlenltr 100 -maxlenltr 7000 -mintsd 4 -maxtsd 6 -motif TGCA -motifmis 1 -similar 85 -vic 10 -seed 20 -seqids yes > genome.harvest.scn
 #LTR_FINDER_parallel
 LTR_FINDER_parallel -seq assembly.fasta -harvest_out -size 1000000 -time 300
-#merging results
+#merge results
 cat genome.harvest.scn assembly.fasta.finder.combine.scn > LTR_retriever_input.rawLTR.scn
 ```
-Then, calculate LAI using LTR_retriever
+Then, run LTR_retriever to calculate LAI
 ```bash
 LTR_retriever -genome assembly.fasta -inharvest LTR_retriever_input.rawLTR.scn
 ```
-The LAI score can be obtained from the last column of the `.out.LAI` file.
-**IMPORTANT NOTE:  Accurate estimation of LAI is limited to genomes with at least 5% total LTR-RT content and 0.1% intact LTR-RT content.**
+The LAI score can be obtained from the last column of the output file ending in `.out.LAI`
+
+  *IMPORTANT NOTE:  Accurate estimation of LAI is limited to genomes with at least 5% total LTR-RT content and 0.1% intact LTR-RT content.*
+
 
 ### **QV**
 Quality value is estimated using k-mer-based methods with high-accuracy sequencing data (e.g., Illumina reads).
