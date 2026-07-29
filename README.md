@@ -98,7 +98,7 @@ Sample name will be used for the plot legend, and corresponds to species scienti
 ## Assembly and annotation evaluation
 
 These commands provide example workflows; parameters may require adjustment depending on data type, software version or configuration, and computational resources.
-For software supporting information please see [seqtk](https://github.com/lh3/seqtk), [BUSCO](https://busco.ezlab.org/), [PSAURON](https://github.com/salzberg-lab/PSAURON), and [Merqury](https://github.com/marbl/merqury).
+For software supporting information please see [seqtk](https://github.com/lh3/seqtk), [BUSCO](https://busco.ezlab.org/), [PSAURON](https://github.com/salzberg-lab/PSAURON), [LTR_retriever](https://github.com/oushujun/LTR_retriever), and [Merqury](https://github.com/marbl/merqury).
 
 
 ### **Contig / Chromosome ratio (CC)**
