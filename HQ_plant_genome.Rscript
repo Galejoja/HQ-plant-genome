@@ -146,7 +146,7 @@ mtext(metrics_text, side = 1, line = 4.8, cex = 1)
 dev.off()
 
 #PNG file
-png_file <- paste0("Quality_metrics_", species, ".png")
+png_file <- paste0(output, ".png")
 png(filename = png_file, width = 10, height = 8, units = "in", res = 300)
 par(fig=c(0,1,0,1))
 HQ_genome <- data.frame(max=c(50, 50, 50, 50, 50, 50), min=c(0, 0, 0, 0, 0, 0), value=c(Norm_CC(CC), Norm_BUSCO_assembly(BUSCO_assembly), Norm_BUSCO_annot(BUSCO_annot), Norm_PSAURON(PSAURON), Norm_LAI(LAI), Norm_QV(QV)), HQ=c(40, 40, 40, 40, 40, 40))
