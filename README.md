@@ -10,6 +10,8 @@ The following metrics are proposed for the evaluation of genome assemblies and a
 
   - **QV (Quality Value)**: Phred-scale base accuracy of the assembly.
 
+  - **LAI (LTR Assembly Index)**: Evaluates the assembly of LTR retrotransposon-rich genomic regions.
+
   - **BUSCO (assembly and annotation)**: Completeness scores computed using the most appropriate lineage dataset.
 
   - **PSAURON score**: Metric reflecting overall genome annotation quality.
@@ -20,11 +22,13 @@ The following metrics are proposed for the evaluation of genome assemblies and a
 
     QV ≥ 40
 
-    BUSCO (assembly) ≥ 90%
+    LAI ≥ 10
 
-    BUSCO (annotation) ≥ 90%
+    BUSCO (assembly) > 95%
 
-    PSAURON ≥ 90%
+    BUSCO (annotation) > 95%
+
+    PSAURON > 90%
 
 ## Requirements
 
@@ -70,6 +74,7 @@ The file should include the following entries:
 - BUSCO_assembly
 - BUSCO_annotation
 - PSAURON
+- LAI
 - QV
 - Sample
 
@@ -85,6 +90,7 @@ Sample name will be used for the plot legend, and corresponds to species scienti
 | BUSCO_assembly | 99.0 |
 | BUSCO_annotation | 98.8 |
 | PSAURON | 95.8 |
+| LAI | 17.30 |
 | QV | 43.39 |
 | Sample | Arabidopsis thaliana |
 
@@ -132,6 +138,25 @@ psauron -i proteins.fasta -o output_name
 ```
 The overall PSAURON score is reported in the output file (top).
 
+### **LAI**
+Completeness of repetitive regions can be evaluated using LTR_retriever from LTR candidates.
+
+First, generating input files with LTRharvest and LTR_FINDER_parallel
+```bash
+#LTRharvest
+gt suffixerator -db assembly.fasta -indexname genome.fasta -tis -suf -lcp -des -ssp -sds -dna
+gt ltrharvest -index genome.fasta -minlenltr 100 -maxlenltr 7000 -mintsd 4 -maxtsd 6 -motif TGCA -motifmis 1 -similar 85 -vic 10 -seed 20 -seqids yes > genome.harvest.scn
+#LTR_FINDER_parallel
+LTR_FINDER_parallel -seq assembly.fasta -harvest_out -size 1000000 -time 300
+#merging results
+cat genome.harvest.scn assembly.fasta.finder.combine.scn > LTR_retriever_input.rawLTR.scn
+```
+Then, calculate LAI using LTR_retriever
+```bash
+LTR_retriever -genome assembly.fasta -inharvest LTR_retriever_input.rawLTR.scn
+```
+The LAI score can be obtained from the last column of the `.out.LAI` file.
+**IMPORTANT NOTE:  Accurate estimation of LAI is limited to genomes with at least 5% total LTR-RT content and 0.1% intact LTR-RT content.**
 
 ### **QV**
 Quality value is estimated using k-mer-based methods with high-accuracy sequencing data (e.g., Illumina reads).
